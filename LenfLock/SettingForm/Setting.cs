@@ -29,11 +29,19 @@ namespace LenfLock {
             add(new MathSetting());
         }
 
+        private void 英文設定ToolStripMenuItem_Click(object sender, EventArgs e) {
+            add(new EnglishSetting());
+        }
         public void add(Form form) {
             form.TopLevel = false;
             panel1.Controls.Clear();
             panel1.Controls.Add(form);
+            updateFormSize(form);
             form.Show();
+        }
+        public void updateFormSize(Form form) {
+            this.Size = new Size(form.Size.Width, form.Size.Height + this.menuStrip1.Height);
+            MainInterface.instance.updateFormSize(this);
         }
     }
 }

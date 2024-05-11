@@ -81,6 +81,12 @@
     <Compile Include="Question\ChineseQuestion.cs" />
     <Compile Include="Question\EnglishQuestion.cs" />
     <Compile Include="Question\MathQuestion.cs" />
+    <Compile Include="SettingForm\EnglishSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm\EnglishSetting.Designer.cs">
+      <DependentUpon>EnglishSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingForm\MathSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     </Compile>
     <EmbeddedResource Include="MainInterface.resx">
       <DependentUpon>MainInterface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm\EnglishSetting.resx">
+      <DependentUpon>EnglishSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingForm\MathSetting.resx">
       <DependentUpon>MathSetting.cs</DependentUpon>

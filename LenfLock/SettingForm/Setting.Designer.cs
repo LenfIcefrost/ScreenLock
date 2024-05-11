@@ -137,5 +137,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem 系統設定ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 英文設定ToolStripMenuItem;
     }
 }

@@ -73,6 +73,10 @@ namespace LenfLock {
             instance.tableLayoutPanel.RowStyles[1].Height = form.Size.Height;
             form.Show();
         }
+        public void updateFormSize(Form form) {
+            instance.tableLayoutPanel.ColumnStyles[1].Width = form.Size.Width;
+            instance.tableLayoutPanel.RowStyles[1].Height = form.Size.Height;
+        }
         public void show() {
             (currentForm as QuestionForm).start();
             lateShow.Stop();
