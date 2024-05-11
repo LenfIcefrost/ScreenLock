@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LenfLock.SettingForm;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,12 +28,12 @@ namespace LenfLock {
         private void 數學設定ToolStripMenuItem_Click(object sender, EventArgs e) {
             add(new MathSetting());
         }
+
         public void add(Form form) {
             form.TopLevel = false;
             panel1.Controls.Clear();
             panel1.Controls.Add(form);
             form.Show();
         }
-
     }
 }
