@@ -40,7 +40,7 @@ namespace LenfLock {
             allScreens = new List<Form>(Screen.AllScreens.Length);
 
             //init
-            TopMost = true;
+            //TopMost = true;
             WindowState = FormWindowState.Maximized;
             FormClosing += _Closing;
 
@@ -59,7 +59,7 @@ namespace LenfLock {
 
             // timer
             lateShow = new Time.Timer(QuestionData.instance.System.TimeForRecall * 60000);
-            lateShow.SynchronizingObject = instance;
+            lateShow.SynchronizingObject = instance;;
             lateShow.AutoReset = false;
             lateShow.Elapsed += (x, e) => show();
         }
@@ -74,11 +74,13 @@ namespace LenfLock {
             form.Show();
         }
         public void updateFormSize(Form form) {
-            instance.tableLayoutPanel.ColumnStyles[1].Width = form.Size.Width;
-            instance.tableLayoutPanel.RowStyles[1].Height = form.Size.Height;
+            instance.tableLayoutPanel.ColumnStyles[1].Width = form.Size.Width + 100;
+            instance.tableLayoutPanel.RowStyles[1].Height = form.Size.Height + 100;
         }
         public void show() {
-            (currentForm as QuestionForm).start();
+            if (instance.isShow == false) {
+                (currentForm as QuestionForm).start();
+            }
             lateShow.Stop();
 
             instance.isShow = true;

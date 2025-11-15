@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+using LenfLock.Utility.Communication;
 
 namespace LenfLock {
     class LenfServer {
@@ -40,28 +41,27 @@ namespace LenfLock {
                     string msg = Encoding.UTF8.GetString(ByteReceive, 0, ReceiveLenght);
 
                     Console.WriteLine((Client.RemoteEndPoint as IPEndPoint).Address + ":" + msg);
-                    if(msg == "secondApp") {
-                        MainInterface.instance.Invoke((MethodInvoker)delegate {
-                            MainInterface.instance.show();
-                        });
-                        break;
+                    CommandHanlder.HanlderPack hanlderPack = CommandHanlder.Command(msg);
+
+                    switch (hanlderPack.code) {
+                        case CommandHanlder.ActionCode.None:
+                            break;
+                        case CommandHanlder.ActionCode.OpenApp:
+                            MainInterface.instance.Invoke((MethodInvoker)delegate {
+                                MainInterface.instance.show();
+                            });
+                            break;
+                        case CommandHanlder.ActionCode.HideApp:
+                            MainInterface.instance.Invoke((MethodInvoker)delegate {
+                                MainInterface.instance.hide();
+                            });
+                            break;
+                        default:
+                            break;
                     }
-                    if(msg == "exit") {
-                        Console.WriteLine((Client.RemoteEndPoint as IPEndPoint).Address + " disconnect");
-                        break;
-                    }
-                    if(msg == "openapp" || msg.Contains("HTTP")) {
-                        MainInterface.instance.Invoke((MethodInvoker)delegate {
-                            MainInterface.instance.show();
-                        });
-                    }
-                    if(msg == "status") {
-                        string str = "";
-                        MainInterface.instance.Invoke((MethodInvoker)delegate {
-                            var a = MainInterface.instance.isShow;
-                            str = a.ToString();
-                        });
-                        Client.Send(Encoding.UTF8.GetBytes(str));
+
+                    if(hanlderPack.msg.Length > 0) {
+                        Client.Send(Encoding.UTF8.GetBytes(hanlderPack.msg));
                     }
                 } catch(Exception e) {
                     Console.WriteLine(e.StackTrace);

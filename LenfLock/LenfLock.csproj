@@ -69,8 +69,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Communication\LenfClient.cs" />
-    <Compile Include="Communication\LenfServer.cs" />
+    <Compile Include="SettingForm\AudioSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm\AudioSetting.Designer.cs">
+      <DependentUpon>AudioSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Communication\CommandHanlder.cs" />
+    <Compile Include="Utility\Communication\LenfAudio.cs" />
+    <Compile Include="Utility\Communication\LenfClient.cs" />
+    <Compile Include="Utility\Communication\LenfMulticast.cs" />
+    <Compile Include="Utility\Communication\LenfServer.cs" />
     <Compile Include="MainInterface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,8 +129,12 @@
     <Compile Include="SettingForm\SystemSetting.Designer.cs">
       <DependentUpon>SystemSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility\LenfUtility.cs" />
     <EmbeddedResource Include="MainInterface.resx">
       <DependentUpon>MainInterface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm\AudioSetting.resx">
+      <DependentUpon>AudioSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingForm\EnglishSetting.resx">
       <DependentUpon>EnglishSetting.cs</DependentUpon>
@@ -180,5 +193,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

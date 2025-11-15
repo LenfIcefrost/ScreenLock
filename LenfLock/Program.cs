@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Text;
+using LenfLock.Communication;
+using LenfLock.Utility;
 
 namespace LenfLock {
     static class Program {
@@ -19,14 +21,13 @@ namespace LenfLock {
                 if(!m.WaitOne(0, false)) {
                     new LenfClient().Connect("127.0.0.1", 3141).Send("secondApp").DisConnect();
                 } else {
-
                     // Load Storage
                     QuestionData.Load();
-                    // lan Server
-                    new LenfServer().Start();
+                    LenfUtility.Instance.Start();
                     // Run
                     Application.Run(new MainInterface());
                     m.ReleaseMutex();
+                    LenfUtility.Instance.Stop();
                 }
             }
         }
