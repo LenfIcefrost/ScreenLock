@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace LenfLock {
     public partial class QuestionForm : Form {
         QuestionPack pack;
-        public QuestionForm() {
+        public QuestionForm(bool freeze = false) {
             InitializeComponent();
 
             textBox2.TextChanged += (x, e) => {
@@ -34,6 +34,10 @@ namespace LenfLock {
                     MainInterface.instance.hide();
                 }
             };
+            button1.Visible = !freeze;
+            textBox1.Visible = !freeze;
+            textBox2.Visible = !freeze;
+            label1.Text = freeze ? "This device has already been frozen, \nplease check with admin." : label1.Text;
         }
         public void start() {
             this.pack = QuestionData.instance.Generate();
