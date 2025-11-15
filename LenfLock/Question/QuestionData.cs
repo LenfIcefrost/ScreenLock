@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using LenfLock.Question;
+using LenfLock.Communication;
 
 namespace LenfLock {
     public enum QuestionType {
@@ -20,6 +21,7 @@ namespace LenfLock {
 
         public QPersonal Pinstance = new QPersonal();
         public QSystem System = new QSystem();
+        public QAudio Audio = new QAudio();
         public ChineseQuestion chineseQuestion = new ChineseQuestion();
         public MathQuestion mathQuestion = new MathQuestion();
         public EnglishQuestion englishQuestion = new EnglishQuestion();
@@ -54,6 +56,16 @@ namespace LenfLock {
             public QuestionType QuestionType { get; set; }
             public QSystem() {
                 this.TimeForRecall = 30;
+            }
+        }
+        #endregion
+        #region Audio
+        public class QAudio {
+            public bool Active { get; set; }
+            public int Filter { get; set; }
+            public QAudio() {
+                this.Active = false;
+                this.Filter = 0;
             }
         }
         #endregion

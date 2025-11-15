@@ -32,6 +32,14 @@ namespace LenfLock {
         private void 英文設定ToolStripMenuItem_Click(object sender, EventArgs e) {
             add(new EnglishSetting());
         }
+
+        private void 聲音設定ToolStripMenuItem_Click(object sender, EventArgs e) {
+            add(new AudioSetting());
+        }
+
+        private void 離開ToolStripMenuItem_Click(object sender, EventArgs e) {
+            MainInterface.instance.add(new QuestionForm());
+        }
         public void add(Form form) {
             form.TopLevel = false;
             panel1.Controls.Clear();
