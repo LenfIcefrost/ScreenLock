@@ -32,6 +32,8 @@ namespace LenfLock.Utility.Communication {
             var localEp = new IPEndPoint(IPAddress.Any, _multicastPort);
 
             _udp = new UdpClient();
+            _udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            _udp.ExclusiveAddressUse = false;
             _udp.Client.Bind(localEp);
 
             _udp.JoinMulticastGroup(_mcastIp);
