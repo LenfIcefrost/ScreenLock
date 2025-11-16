@@ -36,9 +36,10 @@ namespace LenfLock {
         public void Receive(Socket Client) {
             while(Client.Connected) {
                 try {
-                    byte[] ByteReceive = new byte[1024];
-                    int ReceiveLenght = Client.Receive(ByteReceive);
-                    string msg = Encoding.UTF8.GetString(ByteReceive, 0, ReceiveLenght);
+                    ArraySegment<byte> ByteReceive = new ArraySegment<byte>(new byte[2048]);
+                    Task<int> ReceiveLenght = Client.ReceiveAsync(ByteReceive, SocketFlags.None);
+                    string msg = Encoding.UTF8.GetString(ByteReceive.Array, 0, ReceiveLenght.Result);
+                    if (msg.Length == 0) break;
 
                     Console.WriteLine((Client.RemoteEndPoint as IPEndPoint).Address + ":" + msg);
                     CommandHanlder.HanlderPack hanlderPack = CommandHanlder.Command(msg);
@@ -56,20 +57,33 @@ namespace LenfLock {
                                 MainInterface.instance.hide();
                             });
                             break;
+                        case CommandHanlder.ActionCode.FreezeApp:
+                            MainInterface.instance.Invoke((MethodInvoker)delegate {
+                                MainInterface.instance.show(freeze: true);
+                            });
+                            break;
                         default:
                             break;
                     }
 
-                    if(hanlderPack.msg.Length > 0) {
+                    if (hanlderPack.msg.Length > 0) {
                         Client.Send(Encoding.UTF8.GetBytes(hanlderPack.msg));
                     }
+                    //Client.Send(Encoding.UTF8.GetBytes(hanlderPack.msg));
                 } catch(Exception e) {
+                    try {
+                        Client.Shutdown(SocketShutdown.Both);
+                    } catch (Exception ee) {
+                        Console.WriteLine(ee.StackTrace);
+                    }
                     Console.WriteLine(e.StackTrace);
                     break;
                 }
             }
 
             Client.Disconnect(true);
+            Client.Close();
+            Console.WriteLine($"{((IPEndPoint)Client.RemoteEndPoint).Address} Disconnect");
             clients.Remove(Client);
         }
     }

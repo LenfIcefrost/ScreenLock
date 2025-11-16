@@ -20,7 +20,7 @@ namespace LenfLock {
                     MainInterface.instance.add(new Setting());
             };
 
-            start();
+            start(freeze);
 
             button1.Click += (x, e) => {
                 if(pack.Check(textBox1.Text.Trim(new char[] { '\n', '\r', ' ' }))) {
@@ -34,14 +34,13 @@ namespace LenfLock {
                     MainInterface.instance.hide();
                 }
             };
+        }
+        public void start(bool freeze = false) {
             button1.Visible = !freeze;
             textBox1.Visible = !freeze;
             textBox2.Visible = !freeze;
-            label1.Text = freeze ? "This device has already been frozen, \nplease check with admin." : label1.Text;
-        }
-        public void start() {
             this.pack = QuestionData.instance.Generate();
-            label1.Text = $"Question：\n{pack.Question}";
+            label1.Text = freeze ? "This device has already been frozen, \nplease check with admin." : $"Question：\n{pack.Question}";
         }
     }
 }

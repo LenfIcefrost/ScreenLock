@@ -13,7 +13,8 @@ namespace LenfLock.Utility.Communication {
         public enum ActionCode {
             None,
             OpenApp,
-            HideApp
+            HideApp,
+            FreezeApp
         }
         public class HanlderPack {
             public ActionCode code { get; set; }
@@ -48,8 +49,10 @@ namespace LenfLock.Utility.Communication {
             }
             JObject? json = null;
             try {
+                if (command == "") return new HanlderPack(ActionCode.None);
                 json = JObject.Parse(command);
-            } catch {
+            } catch (Exception e) {
+                Console.WriteLine(e.ToString());
                 return new HanlderPack(ActionCode.None);
             }
             if (json.TryGetValue("type", out var typeToken) &&
@@ -116,7 +119,7 @@ namespace LenfLock.Utility.Communication {
                     };
 
                     string jsonResponse = JsonConvert.SerializeObject(responseObj);
-                    return new HanlderPack(ActionCode.OpenApp, jsonResponse);
+                    return new HanlderPack(ActionCode.FreezeApp, jsonResponse);
                 }
             }
             return new HanlderPack(ActionCode.None);
