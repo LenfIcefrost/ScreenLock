@@ -11,6 +11,7 @@ namespace LenfLock.Communication {
         const int MMSYSERR_NOERROR = 0;
         const int CALLBACK_FUNCTION = 0x30000;
         const int WIM_DATA = 0x3C0;
+        bool startFailed = false;
 
         [DllImport("winmm.dll", SetLastError = true)]
         static extern int waveInOpen(out IntPtr hWaveIn, int uDeviceID, WaveFormat lpFormat, WaveInProc dwCallback, IntPtr dwInstance, int dwFlags);
@@ -87,7 +88,8 @@ namespace LenfLock.Communication {
 
                 waveInStart(waveInHandle);
             } else {
-                MessageBox.Show("麥克風獲取發生錯誤 Code : " + result);
+                startFailed = true;
+                //MessageBox.Show("麥克風獲取發生錯誤 Code : " + result);
             }
         }
 
@@ -123,6 +125,7 @@ namespace LenfLock.Communication {
         }
 
         public void StopRecording() {
+            if (startFailed) return;
             waveInStop(waveInHandle);
             waveInClose(waveInHandle);
 
